@@ -1,3 +1,5 @@
+echo -e "\n${yellow}Executing pre-push hook...${no_color}\n"
+
 #!/bin/sh
 
 BRANCH_NAME=$(git symbolic-ref --short HEAD)
