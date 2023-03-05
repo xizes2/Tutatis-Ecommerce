@@ -1,4 +1,4 @@
-echo -e "\e[1;33mExecuting pre-push hook...\033[0m"
+echo -e "\e[0;33mExecuting pre-push hook...\033[0m"
 
 #!/bin/sh
 
