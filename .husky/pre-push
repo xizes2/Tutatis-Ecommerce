@@ -1,0 +1,8 @@
+#!/bin/sh
+
+BRANCH_NAME=$(git symbolic-ref --short HEAD)
+
+if ! echo "$BRANCH_NAME" | grep -E '^(hotfix|bugfix|feature)\/[a-zA-Z0-9_-]+$' > /dev/null; then
+  echo "\e[41mInvalid branch name.\033[0m \e[1;33mAllowed formats are hotfix/, bugfix/, or feature/ followed by a word with letters, numbers, hyphens, or underscores.\033[0m "
+  exit 1
+fi
