@@ -11,7 +11,7 @@ echo -e "\n${yellow}Executing pre-commit hook...${no_color}\n"
 FILES_PATTERN='\.(js|jsx|ts|tsx)(\..+)?$'
 FORBIDDEN='any|console\.[clear|dir|log|info|warn|error]'
 
-#check for console. references in your code
+#check for console. and 'any' references in your code
 
 if git diff --cached --name-only | \
     grep -E $FILES_PATTERN | \
@@ -24,7 +24,7 @@ fi
 
 FORBIDDEN='debugger'
 
-#check for console. references in your code
+#check for 'debugger' references in your code
 
 if git diff --cached --name-only | \
     grep -E $FILES_PATTERN | \
