@@ -1,6 +1,5 @@
 import SanityClient from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
-import "../loadEnvironments";
 
 export const client = SanityClient({
   projectId: "0pe18ibm",
