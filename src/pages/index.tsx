@@ -10,7 +10,7 @@ interface HomeProps {
 }
 
 function Home({ products, productBannerData }: HomeProps) {
-  console.log(productBannerData);
+  console.log("iii");
   return (
     <>
       <HeroBanner productBanner={productBannerData[0].productBanner} />
