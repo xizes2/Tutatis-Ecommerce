@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { urlFor } from "../lib/client";
 
-interface HeroBannerProps {
+export interface HeroBannerProps {
   productBanner: {
     buttonText: string;
     description: string;
