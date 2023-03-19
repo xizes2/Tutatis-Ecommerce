@@ -1,22 +1,42 @@
 import React from "react";
+import { client } from "../../lib/client";
 import FooterBanner from "../../components/FooterBanner";
-import HeroBanner from "../../components/HeroBanner";
-import product from "../../sanity_tutatisecommerce/schemas/product";
+import HeroBanner, { HeroBannerProps } from "../../components/HeroBanner";
+import Product, { ProductProps } from "../../components/Product";
 
-function Home() {
+interface HomeProps {
+  products: Array<ProductProps>;
+  bannerData: Array<HeroBannerProps>;
+}
+
+function Home({ products, bannerData }: HomeProps) {
   return (
     <>
-      <HeroBanner />
+      <HeroBanner {...bannerData[0]} />
       <div className="products-heading">
-        <h2>Best Selling Products</h2>
+        <h2>Productos más vendidos</h2>
         <p>Pienso Nature Diet</p>
       </div>
       <div className="products-container">
-        {["product1", "product2"].map((product) => product)}
+        {products.map((product: ProductProps) => (
+          <Product key={product._id} {...product} />
+        ))}
       </div>
       <FooterBanner />
     </>
   );
 }
+
+export const getServerSideProps = async () => {
+  const productsQuery = "*[_type == 'product']";
+  const products = await client.fetch(productsQuery);
+
+  const bannerQuery = "*[_type == 'banner']";
+  const bannerData = await client.fetch(bannerQuery);
+
+  return {
+    props: { products, bannerData },
+  };
+};
 
 export default Home;
