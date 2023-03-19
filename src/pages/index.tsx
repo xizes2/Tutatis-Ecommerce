@@ -2,24 +2,25 @@ import React from "react";
 import { client } from "../../lib/client";
 import FooterBanner from "../../components/FooterBanner";
 import HeroBanner, { HeroBannerProps } from "../../components/HeroBanner";
-import product from "../../sanity_tutatisecommerce/schemas/product";
+import Product, { ProductProps } from "../../components/Product";
 
 interface HomeProps {
-  products: [];
-  productBannerData: Array<HeroBannerProps>;
+  products: Array<ProductProps>;
+  bannerData: Array<HeroBannerProps>;
 }
 
-function Home({ products, productBannerData }: HomeProps) {
-  console.log("iii");
+function Home({ products, bannerData }: HomeProps) {
   return (
     <>
-      <HeroBanner productBanner={productBannerData[0].productBanner} />
+      <HeroBanner {...bannerData[0]} />
       <div className="products-heading">
-        <h2>Best Selling Products</h2>
+        <h2>Productos más vendidos</h2>
         <p>Pienso Nature Diet</p>
       </div>
       <div className="products-container">
-        {products.map((product: any) => product.name)}
+        {products.map((product: ProductProps) => (
+          <Product key={product._id} {...product} />
+        ))}
       </div>
       <FooterBanner />
     </>
@@ -31,10 +32,10 @@ export const getServerSideProps = async () => {
   const products = await client.fetch(productsQuery);
 
   const bannerQuery = "*[_type == 'banner']";
-  const bannerProduct = await client.fetch(bannerQuery);
+  const bannerData = await client.fetch(bannerQuery);
 
   return {
-    props: { products, bannerProduct },
+    props: { products, bannerData },
   };
 };
 
