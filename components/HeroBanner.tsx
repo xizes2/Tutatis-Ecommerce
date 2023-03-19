@@ -4,23 +4,12 @@ import React from "react";
 import { urlFor } from "../lib/client";
 
 export interface HeroBannerProps {
-<<<<<<< HEAD
   buttonText: string;
   description: string;
   discount: string;
   image: {
     asset: {
       _ref: string;
-=======
-  productBanner: {
-    buttonText: string;
-    description: string;
-    discount: string;
-    image: {
-      asset: {
-        _ref: string;
-      };
->>>>>>> 88701923985e92d610259e90e947582fbf14145b
     };
   };
   largeText1: string;
