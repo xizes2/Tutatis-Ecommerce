@@ -34,6 +34,7 @@ function Product({ description, image, name, price, slug }: ProductProps) {
             alt={description}
             width={250}
             height={250}
+            className="product-image"
           />
           <p>{description}</p>
         </div>
