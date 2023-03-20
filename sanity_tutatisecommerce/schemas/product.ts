@@ -35,6 +35,13 @@ export default {
       name: "description",
       title: "Description",
       type: "string",
+      validation: (Rule: {
+        max: (arg0: number) => {
+          (): void;
+          new (): void;
+          warning: {(arg0: string): void; new (): void};
+        };
+      }): void => Rule.max(30).warning("Max 30 characters!"),
     },
   ],
 };
