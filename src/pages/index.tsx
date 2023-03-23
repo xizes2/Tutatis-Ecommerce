@@ -15,14 +15,13 @@ function Home({ products, bannerData }: HomeProps) {
       <HeroBanner {...bannerData[0]} />
       <div className="products-heading">
         <h2>Productos más vendidos</h2>
-        <p>Pienso Nature Diet</p>
       </div>
       <div className="products-container">
         {products.map((product: ProductProps) => (
           <Product key={product._id} {...product} />
         ))}
       </div>
-      <FooterBanner />
+      <FooterBanner {...bannerData[0]} />
     </>
   );
 }
