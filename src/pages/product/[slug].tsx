@@ -1,12 +1,12 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
   AiFillStar,
   AiOutlineStar,
 } from "react-icons/ai";
-import { ProductProps } from "../../../components/Product";
+import Product, { ProductProps } from "../../../components/Product";
 import { client, urlFor } from "../../../lib/client";
 
 interface ProductDetailsProps {
@@ -15,65 +15,84 @@ interface ProductDetailsProps {
 }
 
 function ProductDetails({ productDetail, products }: ProductDetailsProps) {
+  const [index, setIndex] = useState(0);
+
   return (
     <div>
       <div className="product-detail-container">
         <div>
           <div className="image-container">
             <Image
-              src={urlFor(productDetail.image[0].asset._ref).url()}
+              src={urlFor(productDetail.image[index].asset._ref).url()}
               alt={productDetail.description}
-              width={250}
-              height={250}
-              className="product-image"
+              width={450}
+              height={450}
+              className="product-detail-image"
             />
           </div>
           <div className="small-images-container">
-            {productDetail.image.map((item, index) => (
+            {productDetail.image.map((item, indx) => (
               <Image
-                key={index}
+                key={indx}
                 src={urlFor(item.asset._ref).url()}
                 alt={""}
-                width={150}
-                height={150}
+                width={100}
+                height={100}
+                onMouseEnter={() => setIndex(indx)}
+                className={
+                  indx === index ? "small-image selected-image" : "small-image"
+                }
               />
             ))}
           </div>
-          <div className="product-detail-desc">
-            <h1>{productDetail.name}</h1>
-            <div className="reviews">
-              <div>
-                <AiFillStar />
-                <AiFillStar />
-                <AiFillStar />
-                <AiFillStar />
-                <AiOutlineStar />
-              </div>
-              <p>(20)</p>
+        </div>
+        <div className="product-detail-desc">
+          <h1>{productDetail.name}</h1>
+          <div className="reviews">
+            <div>
+              <AiFillStar />
+              <AiFillStar />
+              <AiFillStar />
+              <AiFillStar />
+              <AiOutlineStar />
             </div>
-            <h4>Details: </h4>
-            <p>{productDetail.description}</p>
-            <p className="price">${productDetail.price}</p>
-            <div className="quantity">
-              <h3>Quantity:</h3>
-              <p className="quantity-desc">
-                <span className="minus">
-                  <AiOutlineMinus />
-                </span>
-                <span className="num">0</span>
-                <span className="plus">
-                  <AiOutlinePlus />
-                </span>
-              </p>
-            </div>
-            <div className="buttons">
-              <button type="button" className="add-to-cart">
-                Add to Cart
-              </button>
-              <button type="button" className="buy-now">
-                Buy Now
-              </button>
-            </div>
+            <p>(20)</p>
+          </div>
+          <h4>Details: </h4>
+          <p>{productDetail.description}</p>
+          <p className="price">${productDetail.price}</p>
+          <div className="quantity">
+            <h3>Quantity:</h3>
+            <p className="quantity-desc">
+              <span className="minus">
+                <AiOutlineMinus />
+              </span>
+              <span className="num">0</span>
+              <span className="plus">
+                <AiOutlinePlus />
+              </span>
+            </p>
+          </div>
+          <div className="buttons">
+            <button type="button" className="add-to-cart">
+              Add to Cart
+            </button>
+            <button type="button" className="buy-now">
+              Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="maylike-products-wrapper">
+        <h2>Puede que te interese también</h2>
+        <div className="marquee">
+          <div
+            className="maylike-products-container track"
+            onClick={() => setIndex(0)}
+          >
+            {products.map((product) => (
+              <Product key={product._id} {...product} />
+            ))}
           </div>
         </div>
       </div>
