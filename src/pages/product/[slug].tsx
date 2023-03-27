@@ -33,7 +33,7 @@ function ProductDetails({ productDetail, products }: ProductDetailsProps) {
           <div className="small-images-container">
             {productDetail.image.map((item, indx) => (
               <Image
-                key={indx}
+                key={item.asset._ref}
                 src={urlFor(item.asset._ref).url()}
                 alt={""}
                 width={100}
