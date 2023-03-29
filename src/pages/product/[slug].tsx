@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
@@ -90,7 +91,11 @@ function ProductDetails({ productDetail, products }: ProductDetailsProps) {
             </p>
           </div>
           <div className="buttons">
-            <button type="button" className="add-to-cart">
+            <button
+              type="button"
+              className="add-to-cart"
+              onClick={() => toast.success("Producto agregado al carrito!")}
+            >
               Add to Cart
             </button>
             <button type="button" className="buy-now">
