@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
@@ -7,6 +7,7 @@ import {
   AiOutlineStar,
 } from "react-icons/ai";
 import Product, { ProductProps } from "../../../components/Product";
+import useTutatisEcommerce from "../../../hooks/useTutatisEcommerce";
 import { client, urlFor } from "../../../lib/client";
 
 interface ProductDetailsProps {
@@ -16,6 +17,20 @@ interface ProductDetailsProps {
 
 function ProductDetails({ productDetail, products }: ProductDetailsProps) {
   const [index, setIndex] = useState(0);
+
+  const {
+    purchaseQuantity,
+    setPurchaseQuantity,
+    decreasePurchaseQuantity,
+    increasePurchaseQuantity,
+  } = useTutatisEcommerce();
+
+  useEffect(() => {
+    return () => {
+      setPurchaseQuantity(1);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productDetail]);
 
   return (
     <div>
@@ -28,6 +43,7 @@ function ProductDetails({ productDetail, products }: ProductDetailsProps) {
               width={450}
               height={450}
               className="product-detail-image"
+              priority={true}
             />
           </div>
           <div className="small-images-container">
@@ -64,11 +80,11 @@ function ProductDetails({ productDetail, products }: ProductDetailsProps) {
           <div className="quantity">
             <h3>Quantity:</h3>
             <p className="quantity-desc">
-              <span className="minus">
+              <span className="minus" onClick={decreasePurchaseQuantity}>
                 <AiOutlineMinus />
               </span>
-              <span className="num">0</span>
-              <span className="plus">
+              <span className="num">{purchaseQuantity}</span>
+              <span className="plus" onClick={increasePurchaseQuantity}>
                 <AiOutlinePlus />
               </span>
             </p>
