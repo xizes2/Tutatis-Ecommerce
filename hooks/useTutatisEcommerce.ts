@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 function useTutatisEcommerce() {
   const [purchaseQuantity, setPurchaseQuantity] = useState(1);
