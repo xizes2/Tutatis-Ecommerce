@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <link rel="icon" href="favicon_tutatis.png" />
+        <link rel="icon" href="/favicon_tutatis.png" />
       </Head>
       <body>
         <Main />
