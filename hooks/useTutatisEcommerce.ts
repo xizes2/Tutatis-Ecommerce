@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 function useTutatisEcommerce() {
   const [purchaseQuantity, setPurchaseQuantity] = useState(1);
@@ -18,11 +19,20 @@ function useTutatisEcommerce() {
     });
   }
 
+  function addProductToCart(productId: string, productQuantity: number) {
+    const addedProduct = {
+      _id: productId,
+      qty: productQuantity,
+    };
+    toast.success("Producto agregado al carrito!");
+  }
+
   return {
     purchaseQuantity,
     setPurchaseQuantity,
     increasePurchaseQuantity,
     decreasePurchaseQuantity,
+    addProductToCart,
   };
 }
 
