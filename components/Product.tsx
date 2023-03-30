@@ -3,7 +3,7 @@ import Link from "next/link";
 import { urlFor } from "../lib/client";
 import Image from "next/image";
 
-export interface ProductProps {
+export interface ProductDetailsProps {
   description: string;
   image: Array<{
     asset: {
@@ -22,7 +22,13 @@ export interface ProductProps {
   _updatedAt: string;
 }
 
-function Product({ description, image, name, price, slug }: ProductProps) {
+function Product({
+  description,
+  image,
+  name,
+  price,
+  slug,
+}: ProductDetailsProps) {
   return (
     <div>
       <Link href={`/product/${slug.current}`}>

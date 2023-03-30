@@ -2,10 +2,10 @@ import React from "react";
 import { client } from "../../lib/client";
 import FooterBanner from "../../components/FooterBanner";
 import HeroBanner, { HeroBannerProps } from "../../components/HeroBanner";
-import Product, { ProductProps } from "../../components/Product";
+import Product, { ProductDetailsProps } from "../../components/Product";
 
 interface HomeProps {
-  products: Array<ProductProps>;
+  products: Array<ProductDetailsProps>;
   bannerData: Array<HeroBannerProps>;
 }
 
@@ -17,7 +17,7 @@ function Home({ products, bannerData }: HomeProps) {
         <h2>Productos más vendidos</h2>
       </div>
       <div className="products-container">
-        {products.map((product: ProductProps) => (
+        {products.map((product: ProductDetailsProps) => (
           <Product key={product._id} {...product} />
         ))}
       </div>
