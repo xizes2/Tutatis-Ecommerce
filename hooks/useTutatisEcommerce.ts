@@ -25,7 +25,6 @@ function useTutatisEcommerce() {
       qty: productQuantity,
     };
     toast.success("Producto agregado al carrito!");
-    console.log(addedProduct);
   }
 
   return {
