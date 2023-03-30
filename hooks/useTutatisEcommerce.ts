@@ -1,7 +1,5 @@
-import ProductDetails from "@/pages/product/[slug]";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { ProductDetailsProps } from "../components/Product";
 
 interface ShopCart {
   productId: string;
