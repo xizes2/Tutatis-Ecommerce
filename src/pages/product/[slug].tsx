@@ -1,22 +1,27 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
   AiFillStar,
   AiOutlineStar,
 } from "react-icons/ai";
-import Product, { ProductProps } from "../../../components/Product";
+import Product, { ProductDetailsProps } from "../../../components/Product";
 import useTutatisEcommerce from "../../../hooks/useTutatisEcommerce";
 import { client, urlFor } from "../../../lib/client";
 
-interface ProductDetailsProps {
-  productDetail: ProductProps;
-  products: Array<ProductProps>;
+interface ProductsProps {
+  products: Array<ProductDetailsProps>;
 }
 
-function ProductDetails({ productDetail, products }: ProductDetailsProps) {
+function ProductDetails({
+  products,
+  _id,
+  image,
+  description,
+  name,
+  price,
+}: ProductsProps & ProductDetailsProps) {
   const [index, setIndex] = useState(0);
 
   const {
@@ -24,6 +29,7 @@ function ProductDetails({ productDetail, products }: ProductDetailsProps) {
     setPurchaseQuantity,
     decreasePurchaseQuantity,
     increasePurchaseQuantity,
+    addProductToCart,
   } = useTutatisEcommerce();
 
   useEffect(() => {
@@ -31,7 +37,7 @@ function ProductDetails({ productDetail, products }: ProductDetailsProps) {
       setPurchaseQuantity(1);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productDetail]);
+  }, [_id]);
 
   return (
     <div>
@@ -39,8 +45,8 @@ function ProductDetails({ productDetail, products }: ProductDetailsProps) {
         <div>
           <div className="image-container">
             <Image
-              src={urlFor(productDetail.image[index].asset._ref).url()}
-              alt={productDetail.description}
+              src={urlFor(image[index].asset._ref).url()}
+              alt={description}
               width={450}
               height={450}
               className="product-detail-image"
@@ -48,7 +54,7 @@ function ProductDetails({ productDetail, products }: ProductDetailsProps) {
             />
           </div>
           <div className="small-images-container">
-            {productDetail.image.map((item, indx) => (
+            {image.map((item, indx) => (
               <Image
                 key={item.asset._ref}
                 src={urlFor(item.asset._ref).url()}
@@ -64,7 +70,7 @@ function ProductDetails({ productDetail, products }: ProductDetailsProps) {
           </div>
         </div>
         <div className="product-detail-desc">
-          <h1>{productDetail.name}</h1>
+          <h1>{name}</h1>
           <div className="reviews">
             <div>
               <AiFillStar />
@@ -76,8 +82,8 @@ function ProductDetails({ productDetail, products }: ProductDetailsProps) {
             <p>(20)</p>
           </div>
           <h4>Details: </h4>
-          <p>{productDetail.description}</p>
-          <p className="price">${productDetail.price}</p>
+          <p>{description}</p>
+          <p className="price">${price}</p>
           <div className="quantity">
             <h3>Quantity:</h3>
             <p className="quantity-desc">
@@ -94,7 +100,7 @@ function ProductDetails({ productDetail, products }: ProductDetailsProps) {
             <button
               type="button"
               className="add-to-cart"
-              onClick={() => toast.success("Producto agregado al carrito!")}
+              onClick={() => addProductToCart(_id, purchaseQuantity)}
             >
               Add to Cart
             </button>
@@ -125,7 +131,7 @@ export async function getStaticPaths() {
   const productsQuery = "*[_type == 'product']{slug {current}}";
   const products = await client.fetch(productsQuery);
 
-  const paths = products.map((product: ProductProps) => ({
+  const paths = products.map((product: ProductDetailsProps) => ({
     params: { slug: product.slug.current },
   }));
 
@@ -145,10 +151,11 @@ export async function getStaticProps({
   const productDetailQuery = `*[_type == 'product' && slug.current == '${slug}'][0]`;
   const productsQuery = "*[_type == 'product']";
 
-  const productDetail = await client.fetch(productDetailQuery);
-  const products = await client.fetch(productsQuery);
+  const { _id, image, description, name, price }: ProductDetailsProps =
+    await client.fetch(productDetailQuery);
+  const products: ProductsProps = await client.fetch(productsQuery);
 
-  return { props: { productDetail, products } };
+  return { props: { _id, image, description, name, price, products } };
 }
 
 export default ProductDetails;
