@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { urlFor } from "../lib/client";
-import { HeroBannerProps } from "./HeroBanner";
+import { IHeroBannerProps } from "./HeroBanner";
 
 function FooterBanner({
   discount,
@@ -15,7 +15,7 @@ function FooterBanner({
   product,
   buttonText,
   image,
-}: HeroBannerProps) {
+}: IHeroBannerProps) {
   return (
     <div>
       <div className="footer-banner-container">

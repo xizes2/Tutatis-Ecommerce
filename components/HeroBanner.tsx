@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { urlFor } from "../lib/client";
 
-export interface HeroBannerProps {
+export interface IHeroBannerProps {
   buttonText: string;
   description: string;
   discount: string;
@@ -31,7 +31,7 @@ function HeroBanner({
   image,
   buttonText,
   description,
-}: HeroBannerProps) {
+}: IHeroBannerProps) {
   return (
     <div className="hero-banner-container">
       <div>
