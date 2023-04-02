@@ -8,11 +8,12 @@ function Navbar() {
       <p className="logo">
         <Link href={"/"}>Nature Diet</Link>
       </p>
-
-      <button type="button" className="cart-icon" onClick={() => {}}>
-        <AiOutlineShopping />
-        <span className="cart-item-qty">1</span>
-      </button>
+      <Link href={`/shopcart/shopcart`}>
+        <button type="button" className="cart-icon" onClick={() => {}}>
+          <AiOutlineShopping />
+          <span className="cart-item-qty">1</span>
+        </button>
+      </Link>
     </div>
   );
 }
