@@ -1,17 +1,21 @@
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
   AiFillStar,
   AiOutlineStar,
 } from "react-icons/ai";
-import Product, { ProductDetailsProps } from "../../../components/Product";
+import Product, { IProductDetailsProps } from "../../../components/Product";
 import useTutatisEcommerce from "../../../hooks/useTutatisEcommerce";
 import { client, urlFor } from "../../../lib/client";
+import {
+  IShopCartContext,
+  ShopCartContext,
+} from "../../../context/ShopCartContext";
 
-interface ProductsProps {
-  products: Array<ProductDetailsProps>;
+interface IProductsProps {
+  products: Array<IProductDetailsProps>;
 }
 
 function ProductDetails({
@@ -21,15 +25,18 @@ function ProductDetails({
   description,
   name,
   price,
-}: ProductsProps & ProductDetailsProps) {
+}: IProductsProps & IProductDetailsProps) {
   const [index, setIndex] = useState(0);
+
+  const { shopCart, addProductToCart } = useContext(
+    ShopCartContext
+  ) as IShopCartContext;
 
   const {
     purchaseQuantity,
     setPurchaseQuantity,
     decreasePurchaseQuantity,
     increasePurchaseQuantity,
-    addProductToCart,
   } = useTutatisEcommerce();
 
   useEffect(() => {
@@ -100,7 +107,12 @@ function ProductDetails({
             <button
               type="button"
               className="add-to-cart"
-              onClick={() => addProductToCart(_id, purchaseQuantity)}
+              onClick={() =>
+                addProductToCart(shopCart, {
+                  productId: _id,
+                  productQuantity: purchaseQuantity,
+                })
+              }
             >
               Add to Cart
             </button>
@@ -131,7 +143,7 @@ export async function getStaticPaths() {
   const productsQuery = "*[_type == 'product']{slug {current}}";
   const products = await client.fetch(productsQuery);
 
-  const paths = products.map((product: ProductDetailsProps) => ({
+  const paths = products.map((product: IProductDetailsProps) => ({
     params: { slug: product.slug.current },
   }));
 
@@ -141,19 +153,19 @@ export async function getStaticPaths() {
   };
 }
 
-interface GetStaticPropsProps {
+interface IGetStaticPropsProps {
   params: { slug: string };
 }
 
 export async function getStaticProps({
   params: { slug },
-}: GetStaticPropsProps) {
+}: IGetStaticPropsProps) {
   const productDetailQuery = `*[_type == 'product' && slug.current == '${slug}'][0]`;
   const productsQuery = "*[_type == 'product']";
 
-  const { _id, image, description, name, price }: ProductDetailsProps =
+  const { _id, image, description, name, price }: IProductDetailsProps =
     await client.fetch(productDetailQuery);
-  const products: ProductsProps = await client.fetch(productsQuery);
+  const products: IProductsProps = await client.fetch(productsQuery);
 
   return { props: { _id, image, description, name, price, products } };
 }
