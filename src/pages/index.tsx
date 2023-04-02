@@ -1,15 +1,15 @@
 import React from "react";
 import { client } from "../../lib/client";
 import FooterBanner from "../../components/FooterBanner";
-import HeroBanner, { HeroBannerProps } from "../../components/HeroBanner";
-import Product, { ProductDetailsProps } from "../../components/Product";
+import HeroBanner, { IHeroBannerProps } from "../../components/HeroBanner";
+import Product, { IProductDetailsProps } from "../../components/Product";
 
-interface HomeProps {
-  products: Array<ProductDetailsProps>;
-  bannerData: Array<HeroBannerProps>;
+interface IHomeProps {
+  products: Array<IProductDetailsProps>;
+  bannerData: Array<IHeroBannerProps>;
 }
 
-function Home({ products, bannerData }: HomeProps) {
+function Home({ products, bannerData }: IHomeProps) {
   return (
     <>
       <HeroBanner {...bannerData[0]} />
@@ -17,7 +17,7 @@ function Home({ products, bannerData }: HomeProps) {
         <h2>Productos más vendidos</h2>
       </div>
       <div className="products-container">
-        {products.map((product: ProductDetailsProps) => (
+        {products.map((product: IProductDetailsProps) => (
           <Product key={product._id} {...product} />
         ))}
       </div>

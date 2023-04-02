@@ -3,7 +3,7 @@ import Link from "next/link";
 import { urlFor } from "../lib/client";
 import Image from "next/image";
 
-export interface ProductDetailsProps {
+export interface IProductDetailsProps {
   description: string;
   image: Array<{
     asset: {
@@ -28,7 +28,7 @@ function Product({
   name,
   price,
   slug,
-}: ProductDetailsProps) {
+}: IProductDetailsProps) {
   return (
     <div>
       <Link href={`/product/${slug.current}`}>

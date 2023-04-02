@@ -3,11 +3,11 @@ import React, { ReactNode } from "react";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 
-export interface ChildrenProps {
+export interface IChildrenProps {
   children: ReactNode | Array<ReactNode>;
 }
 
-function Layout({ children }: ChildrenProps) {
+function Layout({ children }: IChildrenProps) {
   return (
     <div className="layout">
       <Head>
