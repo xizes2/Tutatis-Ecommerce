@@ -111,6 +111,8 @@ function ProductDetails({
                 addProductToCart(shopCart, {
                   productId: _id,
                   productQuantity: purchaseQuantity,
+                  productImage: image[0].asset._ref,
+                  productPrice: price,
                 })
               }
             >
