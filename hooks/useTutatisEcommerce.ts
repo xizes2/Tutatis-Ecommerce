@@ -1,10 +1,5 @@
 import { useState } from "react";
 
-export interface IProductAdded {
-  productId: string;
-  productQuantity: number;
-}
-
 function useTutatisEcommerce() {
   const [purchaseQuantity, setPurchaseQuantity] = useState(1);
 
@@ -17,7 +12,7 @@ function useTutatisEcommerce() {
   function decreasePurchaseQuantity() {
     setPurchaseQuantity((prevQuantity) => {
       if (prevQuantity <= 1) {
-        return prevQuantity;
+        return 1;
       }
       return prevQuantity - 1;
     });
