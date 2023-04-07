@@ -90,7 +90,7 @@ function ProductDetails({
           </div>
           <h4>Details: </h4>
           <p>{description}</p>
-          <p className="price">${price}</p>
+          <p className="price">€{price}</p>
           <div className="quantity">
             <h3>Quantity:</h3>
             <p className="quantity-desc">
@@ -113,6 +113,8 @@ function ProductDetails({
                   productQuantity: purchaseQuantity,
                   productImage: image[0].asset._ref,
                   productPrice: price,
+                  productName: name,
+                  totalPrice: price * purchaseQuantity,
                 })
               }
             >
@@ -167,6 +169,7 @@ export async function getStaticProps({
 
   const { _id, image, description, name, price }: IProductDetailsProps =
     await client.fetch(productDetailQuery);
+
   const products: IProductsProps = await client.fetch(productsQuery);
 
   return { props: { _id, image, description, name, price, products } };
