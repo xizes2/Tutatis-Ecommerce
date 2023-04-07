@@ -7,6 +7,8 @@ export interface IProductAdded {
   productQuantity: number;
   productImage: string;
   productPrice: number;
+  productName: string;
+  totalPrice: number;
 }
 
 export interface IShopCartContext {
@@ -14,6 +16,8 @@ export interface IShopCartContext {
   isCartShown: boolean;
   setIsCartShown: Dispatch<SetStateAction<boolean>>;
   addProductToCart: (shopCart: IProductAdded[], product: IProductAdded) => void;
+  decreaseProductQuantityOnCart: (prodId: string) => void;
+  increaseProductQuantityOnCart: (prodId: string) => void;
 }
 
 const initialCart: IProductAdded[] = [];
@@ -23,6 +27,8 @@ export const ShopCartContext = createContext<IShopCartContext>({
   isCartShown: false,
   setIsCartShown: () => {},
   addProductToCart: () => {},
+  decreaseProductQuantityOnCart: () => {},
+  increaseProductQuantityOnCart: () => {},
 });
 
 export const ShopCartContextProvider = ({ children }: IChildrenProps) => {
@@ -57,6 +63,46 @@ export const ShopCartContextProvider = ({ children }: IChildrenProps) => {
     }
   }
 
+  function decreaseProductQuantityOnCart(prodId: string) {
+    const updatedCart = shopCart.map((productInCart) => {
+      if (productInCart.productId === prodId) {
+        let updatedQty;
+        if (productInCart.productQuantity <= 0) {
+          updatedQty = 0;
+        } else {
+          updatedQty = productInCart.productQuantity - 1;
+          toast.success("Cantidad del producto actualizada!");
+        }
+        return {
+          ...productInCart,
+          productQuantity: updatedQty,
+          totalPrice: updatedQty * productInCart.productPrice,
+        };
+      } else {
+        return productInCart;
+      }
+    });
+    setShopCart(updatedCart);
+  }
+
+  function increaseProductQuantityOnCart(prodId: string) {
+    const updatedCart = shopCart.map((productInCart) => {
+      if (productInCart.productId === prodId) {
+        const updatedQty = productInCart.productQuantity + 1;
+
+        return {
+          ...productInCart,
+          productQuantity: updatedQty,
+          totalPrice: updatedQty * productInCart.productPrice,
+        };
+      } else {
+        return productInCart;
+      }
+    });
+    setShopCart(updatedCart);
+    toast.success("Cantidad del producto actualizada!");
+  }
+
   return (
     <ShopCartContext.Provider
       value={{
@@ -64,6 +110,8 @@ export const ShopCartContextProvider = ({ children }: IChildrenProps) => {
         isCartShown,
         setIsCartShown,
         addProductToCart,
+        decreaseProductQuantityOnCart,
+        increaseProductQuantityOnCart,
       }}
     >
       {children}

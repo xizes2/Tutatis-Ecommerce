@@ -1,15 +1,37 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IShopCartContext, ShopCartContext } from "../context/ShopCartContext";
-import { AiOutlineLeft, AiOutlineShopping } from "react-icons/ai";
+import {
+  AiOutlineLeft,
+  AiOutlineMinus,
+  AiOutlinePlus,
+  AiOutlineShopping,
+} from "react-icons/ai";
+import { TiDeleteOutline } from "react-icons/ti";
 import Link from "next/link";
 import Image from "next/image";
 import { urlFor } from "../lib/client";
 
 function ShopCart() {
-  const shopCartRef = useRef();
-  const { shopCart, setIsCartShown } = useContext(
-    ShopCartContext
-  ) as IShopCartContext;
+  const [totalShopCartPrice, setTotalShopCartPrice] = useState(0);
+
+  const {
+    shopCart,
+    setIsCartShown,
+    decreaseProductQuantityOnCart,
+    increaseProductQuantityOnCart,
+  } = useContext(ShopCartContext) as IShopCartContext;
+
+  useEffect(() => {
+    setTotalShopCartPrice(
+      shopCart
+        .map((product) => {
+          return product.totalPrice;
+        })
+        .reduce((prevTotal, currentTotal) => {
+          return prevTotal + currentTotal;
+        }, 0)
+    );
+  }, [shopCart]);
 
   return (
     <div className="cart-wrapper">
@@ -37,7 +59,7 @@ function ShopCart() {
                 }}
                 className="btn"
               >
-                Contnuar comprando
+                Continuar comprando
               </button>
             </Link>
           </div>
@@ -47,14 +69,64 @@ function ShopCart() {
             shopCart.map((product) => (
               <div className="product" key={product.productId}>
                 <Image
+                  className="cart-product-image"
                   alt={product.productId}
                   src={urlFor(product.productImage).url()}
                   width={180}
                   height={180}
-                ></Image>
+                />
+                <div className="item-desc">
+                  <div className="flex top">
+                    <h5>{product.productName}</h5>
+                    <h4>€{product.productPrice}</h4>
+                  </div>
+                  <div className="flex bottom">
+                    <div>
+                      <p className="quantity-desc">
+                        <span
+                          className="minus"
+                          onClick={() =>
+                            decreaseProductQuantityOnCart(product.productId)
+                          }
+                        >
+                          <AiOutlineMinus />
+                        </span>
+                        <span className="num">{product.productQuantity}</span>
+                        <span
+                          className="plus"
+                          onClick={() =>
+                            increaseProductQuantityOnCart(product.productId)
+                          }
+                        >
+                          <AiOutlinePlus />
+                        </span>
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      className="remove-item"
+                      onClick={() => {}}
+                    >
+                      <TiDeleteOutline />
+                    </button>
+                  </div>
+                </div>
               </div>
             ))}
         </div>
+        {shopCart.length >= 1 && (
+          <div className="cart-bottom">
+            <div className="total">
+              <h3>Subtotal:</h3>
+              <h3>€ {totalShopCartPrice}</h3>
+            </div>
+            <div className="btn-container">
+              <button type="button" className="btn">
+                Pagar con Stripe
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

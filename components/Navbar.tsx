@@ -12,7 +12,7 @@ function Navbar() {
   return (
     <div className="navbar-container">
       <p className="logo">
-        <Link href={"/"}>Nature Diet</Link>
+        <Link href={"/"}>Página principal</Link>
       </p>
       <button
         type="button"
