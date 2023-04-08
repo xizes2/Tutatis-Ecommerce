@@ -18,6 +18,7 @@ export interface IShopCartContext {
   addProductToCart: (shopCart: IProductAdded[], product: IProductAdded) => void;
   decreaseProductQuantityOnCart: (prodId: string) => void;
   increaseProductQuantityOnCart: (prodId: string) => void;
+  deleteProductFromCart: (shopCart: IProductAdded[], prodId: string) => void;
 }
 
 const initialCart: IProductAdded[] = [];
@@ -29,6 +30,7 @@ export const ShopCartContext = createContext<IShopCartContext>({
   addProductToCart: () => {},
   decreaseProductQuantityOnCart: () => {},
   increaseProductQuantityOnCart: () => {},
+  deleteProductFromCart: () => {},
 });
 
 export const ShopCartContextProvider = ({ children }: IChildrenProps) => {
@@ -103,6 +105,14 @@ export const ShopCartContextProvider = ({ children }: IChildrenProps) => {
     toast.success("Cantidad del producto actualizada!");
   }
 
+  function deleteProductFromCart(shopCart: IProductAdded[], prodId: string) {
+    const updatedCart = shopCart.filter(
+      (product) => product.productId !== prodId
+    );
+    setShopCart(updatedCart);
+    toast.success("Producto borrado del carrito!");
+  }
+
   return (
     <ShopCartContext.Provider
       value={{
@@ -112,6 +122,7 @@ export const ShopCartContextProvider = ({ children }: IChildrenProps) => {
         addProductToCart,
         decreaseProductQuantityOnCart,
         increaseProductQuantityOnCart,
+        deleteProductFromCart,
       }}
     >
       {children}

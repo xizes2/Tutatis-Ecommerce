@@ -19,6 +19,7 @@ function ShopCart() {
     setIsCartShown,
     decreaseProductQuantityOnCart,
     increaseProductQuantityOnCart,
+    deleteProductFromCart,
   } = useContext(ShopCartContext) as IShopCartContext;
 
   useEffect(() => {
@@ -72,8 +73,8 @@ function ShopCart() {
                   className="cart-product-image"
                   alt={product.productId}
                   src={urlFor(product.productImage).url()}
-                  width={180}
-                  height={180}
+                  width={150}
+                  height={150}
                 />
                 <div className="item-desc">
                   <div className="flex top">
@@ -105,10 +106,16 @@ function ShopCart() {
                     <button
                       type="button"
                       className="remove-item"
-                      onClick={() => {}}
+                      onClick={() =>
+                        deleteProductFromCart(shopCart, product.productId)
+                      }
                     >
                       <TiDeleteOutline />
                     </button>
+                  </div>
+                  <div className="flex top">
+                    <h4>Subtotal del producto:</h4>
+                    <h4>€{product.totalPrice}</h4>
                   </div>
                 </div>
               </div>
