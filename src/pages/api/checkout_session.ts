@@ -47,7 +47,6 @@ export default async function handler(
           {
             shipping_rate_data: "shr_1MvKLFHcRskR6ICcZmk6qdkq",
           },
-          ,
         ],
         success_url: `${req.headers.origin}/?success=true`,
         cancel_url: `${req.headers.origin}/?canceled=true`,
