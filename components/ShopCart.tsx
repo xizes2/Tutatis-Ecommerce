@@ -10,6 +10,12 @@ import { TiDeleteOutline } from "react-icons/ti";
 import Link from "next/link";
 import Image from "next/image";
 import { urlFor } from "../lib/client";
+import { Stripe, loadStripe } from "@stripe/stripe-js";
+import { toast } from "react-hot-toast";
+
+const stripePromise: Promise<Stripe | null> = loadStripe(
+  process.env.STRIPE_PUBLISHABLE_KEY!
+);
 
 function ShopCart() {
   const [totalShopCartPrice, setTotalShopCartPrice] = useState(0);
@@ -21,6 +27,26 @@ function ShopCart() {
     increaseProductQuantityOnCart,
     deleteProductFromCart,
   } = useContext(ShopCartContext) as IShopCartContext;
+
+  const handleCheckout = async () => {
+    const response = await fetch("/api/checkout_session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(shopCart),
+    });
+
+    if (!response.ok) {
+      return;
+    }
+    const data = await response.json();
+
+    toast.loading("Te estamos redireccionando a la página de pago...");
+
+    const stripe = await stripePromise;
+    stripe?.redirectToCheckout({ sessionId: data });
+  };
 
   useEffect(() => {
     setTotalShopCartPrice(
@@ -128,7 +154,11 @@ function ShopCart() {
               <h3>€ {totalShopCartPrice}</h3>
             </div>
             <div className="btn-container">
-              <button type="button" className="btn">
+              <button
+                type="button"
+                className="btn"
+                onClick={() => handleCheckout()}
+              >
                 Pagar con Stripe
               </button>
             </div>
