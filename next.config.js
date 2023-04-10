@@ -5,7 +5,9 @@ const nextConfig = {
 
 module.exports = {
   env: {
-    NEXT_PUBLIC_SANITY_TOKEN: process.env.NEXT_PUBLIC_SANITY_TOKEN,
+    SANITY_TOKEN: process.env.SANITY_TOKEN,
+    STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
   },
   images: {
     remotePatterns: [
