@@ -29,6 +29,8 @@ function ShopCart() {
   } = useContext(ShopCartContext) as IShopCartContext;
 
   const handleCheckout = async () => {
+    toast.loading("Te estamos redireccionando a la página de pago...");
+
     const response = await fetch("/api/checkout_session", {
       method: "POST",
       headers: {
@@ -42,10 +44,8 @@ function ShopCart() {
     }
     const data = await response.json();
 
-    toast.loading("Te estamos redireccionando a la página de pago...");
-
     const stripe = await stripePromise;
-    stripe?.redirectToCheckout({ sessionId: data });
+    stripe?.redirectToCheckout({ sessionId: data.id });
   };
 
   useEffect(() => {
