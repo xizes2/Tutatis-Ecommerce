@@ -47,7 +47,6 @@ export default async function handler(
 
       // Here I used any type beacause TypeScript cannot determine the type of the error that is being caught in the catch block. This is because the try block can potentially throw any type of error, and TypeScript cannot infer the type of the error at compile-time
     } catch (err: any) {
-      console.log("dentro err");
       res.status(err.statusCode || 500).json(err.message);
     }
   } else {
