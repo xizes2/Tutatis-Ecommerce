@@ -1,19 +1,15 @@
 import { IProductAdded } from "../../../context/ShopCartContext";
+import { NextApiRequest, NextApiResponse } from "next";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
+interface ICustomNextApiRequest extends NextApiRequest {
+  body: Array<IProductAdded>;
+}
+
 export default async function handler(
-  req: { method: string; headers: { origin: any }; body: Array<IProductAdded> },
-  res: {
-    redirect: (arg0: number, arg1: any) => void;
-    status: (arg0: number) => {
-      (): any;
-      new (): any;
-      json: { (arg0: any): void; new (): any };
-      end: { (arg0: string): void; new (): any };
-    };
-    setHeader: (arg0: string, arg1: string) => void;
-  }
+  req: ICustomNextApiRequest,
+  res: NextApiResponse
 ) {
   if (req.method === "POST") {
     try {
@@ -29,15 +25,11 @@ export default async function handler(
           return {
             price_data: {
               currency: "eur",
+              unit_amount: product.productPrice * 100,
               product_data: {
                 name: product.productName,
                 images: [img],
               },
-              unit_amount: product.productPrice * 100,
-            },
-            adjustable_quantity: {
-              enabled: true,
-              minimum: 1,
             },
             quantity: product.productQuantity,
           };
@@ -45,13 +37,13 @@ export default async function handler(
         mode: "payment",
         shipping_options: [
           {
-            shipping_rate_data: "shr_1MvKLFHcRskR6ICcZmk6qdkq",
+            shipping_rate: "shr_1MvKLFHcRskR6ICcZmk6qdkq",
           },
         ],
         success_url: `${req.headers.origin}/?success=true`,
         cancel_url: `${req.headers.origin}/?canceled=true`,
       });
-      res.redirect(303, session.url);
+      res.json(session);
 
       // Here I used any type beacause TypeScript cannot determine the type of the error that is being caught in the catch block. This is because the try block can potentially throw any type of error, and TypeScript cannot infer the type of the error at compile-time
     } catch (err: any) {
