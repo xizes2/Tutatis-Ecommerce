@@ -66,24 +66,26 @@ export const ShopCartContextProvider = ({ children }: IChildrenProps) => {
   }
 
   function decreaseProductQuantityOnCart(prodId: string) {
-    const updatedCart = shopCart.map((productInCart) => {
-      if (productInCart.productId === prodId) {
-        let updatedQty;
-        if (productInCart.productQuantity <= 0) {
-          updatedQty = 0;
+    const updatedCart = shopCart
+      .map((productInCart) => {
+        if (productInCart.productId === prodId) {
+          let updatedQty;
+          if (productInCart.productQuantity <= 0) {
+            updatedQty = 0;
+          } else {
+            updatedQty = productInCart.productQuantity - 1;
+            toast.success("Cantidad del producto actualizada!");
+          }
+          return {
+            ...productInCart,
+            productQuantity: updatedQty,
+            totalPrice: updatedQty * productInCart.productPrice,
+          };
         } else {
-          updatedQty = productInCart.productQuantity - 1;
-          toast.success("Cantidad del producto actualizada!");
+          return productInCart;
         }
-        return {
-          ...productInCart,
-          productQuantity: updatedQty,
-          totalPrice: updatedQty * productInCart.productPrice,
-        };
-      } else {
-        return productInCart;
-      }
-    });
+      })
+      .filter((productInCart) => productInCart.productQuantity !== 0);
     setShopCart(updatedCart);
   }
 
