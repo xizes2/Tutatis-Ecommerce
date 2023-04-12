@@ -30,5 +30,14 @@ export default {
         type: "string",
       };
     }),
+    {
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: {
+        source: "product",
+        maxLength: 90,
+      },
+    },
   ],
 };

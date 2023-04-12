@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { IHeroBannerProps } from "../components/HeroBanner";
 
 function useTutatisEcommerce() {
   const [purchaseQuantity, setPurchaseQuantity] = useState(1);
+  const [isBannerdata, setIsBannerdata] = useState(false);
 
   function increasePurchaseQuantity() {
     setPurchaseQuantity((prevQuantity) => {
@@ -18,11 +20,18 @@ function useTutatisEcommerce() {
     });
   }
 
+  function detectBannerData(bannerData: Array<IHeroBannerProps>) {
+    setIsBannerdata(bannerData.length ? true : false);
+  }
+
   return {
     purchaseQuantity,
+    isBannerdata,
+    setIsBannerdata,
     setPurchaseQuantity,
     increasePurchaseQuantity,
     decreasePurchaseQuantity,
+    detectBannerData,
   };
 }
 

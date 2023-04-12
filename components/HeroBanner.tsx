@@ -12,6 +12,9 @@ export interface IHeroBannerProps {
       _ref: string;
     };
   };
+  slug: {
+    current: string;
+  };
   largeText1: string;
   largeText2: string;
   midText: string;
@@ -31,6 +34,7 @@ function HeroBanner({
   image,
   buttonText,
   description,
+  slug,
 }: IHeroBannerProps) {
   return (
     <div className="hero-banner-container">
@@ -46,12 +50,12 @@ function HeroBanner({
           priority={true}
         />
         <div>
-          <Link href={"/product/ID"}>
+          <Link href={`/product/${slug.current}`}>
             <button type="button">{buttonText}</button>
           </Link>
-          <div className="desc">
-            <p>{description}</p>
-          </div>
+        </div>
+        <div className="desc">
+          <p>{description}</p>
         </div>
       </div>
     </div>

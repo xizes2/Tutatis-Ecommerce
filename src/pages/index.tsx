@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { client } from "../../lib/client";
 import FooterBanner from "../../components/FooterBanner";
 import HeroBanner, { IHeroBannerProps } from "../../components/HeroBanner";
 import Product, { IProductDetailsProps } from "../../components/Product";
+import useTutatisEcommerce from "../../hooks/useTutatisEcommerce";
 
 interface IHomeProps {
   products: Array<IProductDetailsProps>;
@@ -10,9 +11,16 @@ interface IHomeProps {
 }
 
 function Home({ products, bannerData }: IHomeProps) {
+  const { detectBannerData, isBannerdata } = useTutatisEcommerce();
+
+  useEffect(() => {
+    detectBannerData(bannerData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bannerData]);
+
   return (
     <>
-      <HeroBanner {...bannerData[0]} />
+      {isBannerdata && <HeroBanner {...bannerData[0]} />}
       <div className="products-heading">
         <h2>Productos más vendidos</h2>
       </div>
@@ -21,7 +29,7 @@ function Home({ products, bannerData }: IHomeProps) {
           <Product key={product._id} {...product} />
         ))}
       </div>
-      <FooterBanner {...bannerData[0]} />
+      {isBannerdata && <FooterBanner {...bannerData[0]} />}
     </>
   );
 }
