@@ -37,7 +37,7 @@ export default async function handler(
         mode: "payment",
         shipping_options: [
           {
-            shipping_rate: "shr_1MvKLFHcRskR6ICcZmk6qdkq",
+            shipping_rate: "shr_1Mw2WDHcRskR6ICciCI65t8Q",
           },
         ],
         success_url: `${req.headers.origin}/?success=true`,

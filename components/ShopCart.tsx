@@ -31,7 +31,7 @@ function ShopCart() {
   const handleCheckout = async () => {
     toast.loading("Te estamos redireccionando a la página de pago...");
 
-    const response = await fetch("/api/checkout_session", {
+    const response = await fetch("/api/checkoutSession", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
