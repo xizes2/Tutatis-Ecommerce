@@ -37,25 +37,26 @@ function HeroBanner({
   slug,
 }: IHeroBannerProps) {
   return (
-    <div className="hero-banner-container">
-      <div>
-        <p className="banner-product-name">{product}</p>
-        <h3>{midText}</h3>
-        <Image
-          src={urlFor(image.asset._ref).url()}
-          alt={product}
-          className="hero-banner-image"
-          width={200}
-          height={200}
-          priority={true}
-        />
+    <div className="hero-banner-container flex">
+      <div className="flex flex-wrap-reverse gap-10 text-center justify-center">
         <div>
-          <Link href={`/product/${slug.current}`}>
-            <button type="button">{buttonText}</button>
-          </Link>
+          <p className="banner-product-name">{product}</p>
+          <h3>{midText}</h3>
+          <div>
+            <Link href={`/product/${slug.current}`}>
+              <button type="button">{buttonText}</button>
+            </Link>
+          </div>
         </div>
-        <div className="desc">
-          <p>{description}</p>
+        <div className="flex items-center flex-col gap-2">
+          <Image
+            src={urlFor(image.asset._ref).url()}
+            alt={product}
+            width={200}
+            height={200}
+            priority={true}
+          />
+          <p className="text-yellowTuta">{description}</p>
         </div>
       </div>
     </div>
