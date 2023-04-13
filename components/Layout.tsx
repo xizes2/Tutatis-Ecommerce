@@ -13,7 +13,7 @@ function Layout({ children }: IChildrenProps) {
       <Head>
         <title>Tutatis E-commerce</title>
       </Head>
-      <header>
+      <header className="sticky top-0 left-0 right-0">
         <Navbar />
       </header>
       <main className="main-container">{children}</main>
