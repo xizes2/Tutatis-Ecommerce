@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { AiOutlineShopping } from "react-icons/ai";
 import { IShopCartContext, ShopCartContext } from "../context/ShopCartContext";
 import ShopCart from "./ShopCart";
+import Image from "next/image";
 
 function Navbar() {
   const { shopCart, isCartShown, setIsCartShown } = useContext(
@@ -10,9 +11,16 @@ function Navbar() {
   ) as IShopCartContext;
 
   return (
-    <div className="navbar-container">
+    <div className="bg-white/80 backdrop-blur-sm p-6 flex   justify-between">
       <p className="logo">
-        <Link href={"/"}>Página principal</Link>
+        <Link href={"/"}>
+          <Image
+            src={"/logot-tetatis-veterinario.png"}
+            width={100}
+            height={100}
+            alt="logo de la empresa"
+          />
+        </Link>
       </p>
       <button
         type="button"
