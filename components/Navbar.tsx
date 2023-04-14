@@ -11,7 +11,7 @@ function Navbar() {
   ) as IShopCartContext;
 
   return (
-    <div className="bg-white/80 backdrop-blur-sm p-6 flex   justify-between">
+    <div className="flex justify-between bg-white/80 p-6 backdrop-blur-sm">
       <p className="logo">
         <Link href={"/"}>
           <Image
