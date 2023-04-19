@@ -211,29 +211,27 @@ span.text-red {
   font-weight: 200;
 }
 .footer-banner-container {
-  padding: 100px 40px;
   background-color: var(--yellow);
-  position: relative;
   height: 400px;
   line-height: 1;
   color: var(--blue-gray);
   width: 100%;
-  margin-top: 120px;
+  margin-top: 80px;
 }
 .banner-desc {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 .banner-desc button {
   border-radius: 15px;
   padding: 10px 16px;
   background-color: white;
-  color: red;
+  color: var(--blue-gray);
   border: none;
-  margin-top: 40px;
   font-size: 18px;
   font-weight: 500;
   cursor: pointer;
+  width: fit-content;
 }
 .banner-desc .left h3 {
   font-weight: 900;
