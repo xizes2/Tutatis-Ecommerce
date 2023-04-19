@@ -7,7 +7,12 @@ export interface IHeroBannerProps {
   buttonText: string;
   description: string;
   discount: string;
-  image: {
+  imageHeroBanner: {
+    asset: {
+      _ref: string;
+    };
+  };
+  imageFooterBanner: {
     asset: {
       _ref: string;
     };
@@ -15,7 +20,7 @@ export interface IHeroBannerProps {
   slug: {
     current: string;
   };
-  largeText1: string;
+  footerBannerText: string;
   largeText2: string;
   midText: string;
   product: string;
@@ -31,14 +36,14 @@ export interface IHeroBannerProps {
 function HeroBanner({
   product,
   midText,
-  image,
+  imageHeroBanner,
   buttonText,
   description,
   slug,
 }: IHeroBannerProps) {
   return (
     <div className="hero-banner-container flex">
-      <div className="flex flex-wrap-reverse gap-10 text-center justify-center">
+      <div className="flex flex-wrap-reverse justify-center gap-10 text-center">
         <div>
           <p className="banner-product-name">{product}</p>
           <h3>{midText}</h3>
@@ -48,9 +53,9 @@ function HeroBanner({
             </Link>
           </div>
         </div>
-        <div className="flex items-center flex-col gap-2">
+        <div className="flex flex-col items-center gap-2">
           <Image
-            src={urlFor(image.asset._ref).url()}
+            src={urlFor(imageHeroBanner.asset._ref).url()}
             alt={product}
             width={200}
             height={200}

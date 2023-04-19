@@ -4,7 +4,7 @@ const fieldsNames = [
   "description",
   "smallText",
   "midText",
-  "largeText1",
+  "footerBannerText",
   "largeText2",
   "discount",
   "saleTime",
@@ -16,8 +16,16 @@ export default {
   type: "document",
   fields: [
     {
-      name: "image",
-      title: "Image",
+      name: "imageHeroBanner",
+      title: "Image Hero Banner",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+    },
+    {
+      name: "imageFooterBanner",
+      title: "Image Footer Banner",
       type: "image",
       options: {
         hotspot: true,
